@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-06-02 12:50+0900\n"
+"PO-Revision-Date: 2017-06-02 12:51+0900\n"
+"Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: includes/cron.php:24
+#, php-format
+msgid "Post expiration interval of %d seconds."
+msgstr "%d 秒間隔で投稿を期限切れにする。"
+
+#: includes/functions.php:60
+msgid "Failed expiration"
+msgstr "期限切れの失敗"
+
+#: includes/meta-box.php:33
+msgid "Expires at specified time"
+msgstr "指定した時間で期限切れになる"
+
+#: includes/meta-box.php:48
+#, php-format
+msgctxt "date-input"
+msgid "%1$s %2$s, %3$s @ %4$s:%5$s"
+msgstr "%3$s年%1$s%2$s日 @ %4$s:%5$s"
+
+#: includes/meta-box.php:59
+#, php-format
+msgid "You can choose post type to be expired at <a href=\"%s\">setting</a>."
+msgstr ""
+"<a href=\"%s\">設定画面</a>で期限切れになる投稿タイプを選択できます。"
+
+#: includes/meta-box.php:103
+msgid "Expires"
+msgstr "期限切れ日時"
+
+#: includes/setting.php:12
+msgid "Post Expiration Setting"
+msgstr "期限切れになる投稿の設定"
+
+#: includes/setting.php:16
+msgid "These settings are used by Taro Clockwork Post for post expiration."
+msgstr "この設定は Taro Clockwork Post の期限切れに利用されます。"
+
+#: includes/setting.php:25
+msgid "Post Types"
+msgstr "投稿タイプ"
+
+#: taro-clockwork-post.php:49
+#, php-format
+msgid ""
+"[Taro Clockwork Post] This plugin requires PHP 5.4.0 and over but your %s."
+msgstr ""
+"[Taro Clockwork Post] このプラグインは PHP 5.4.0 以上必須ですが、あなたの"
+"バージョンは %s です。"
+
+#. Plugin Name of the plugin/theme
+msgid "Taro Clockwork Post"
+msgstr "Taro Clockwork Post"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/tarosky/taro-clockwork-post"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "You can expire post with specified date."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "TAROSKY INC. <mng_wpcom@tarosky.co.jp>"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://tarosky.co.jp"
+msgstr ""
