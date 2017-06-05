@@ -42,10 +42,9 @@ add_filter( 'tscp_expired_status', function( $status, $post ) {
 
 If status is `false`, this plugin doesn't change post status.
 In such situation, you might need adding any custom field to post.
-Use another action which will occur just after `tscp_epired_status`.
+Use another action which will occur just after `tscp_expired_status`.
 
 <pre>
-<?php
 // do something just after post status is/isn't changed.
 add_action( 'tscp_post_expired', function( $post ) {
    // Post is still publish,
