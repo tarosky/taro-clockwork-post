@@ -30,8 +30,7 @@ This plugin runs cron every minute to search expired posts and make them `privat
 
 Private is the default post status but if you want another case, use filter hook for that.
 
-```
-<?php
+<pre>
 // Filter status if post type is `product`
 add_filter( 'tscp_expired_status', function( $status, $post ) {
    if ( 'product' == $post->post_type ) {
@@ -39,13 +38,13 @@ add_filter( 'tscp_expired_status', function( $status, $post ) {
    }
    return $status;
 }, 10, 2 );
-```
+</pre>
 
 If status is `false`, this plugin doesn't change post status.
 In such situation, you might need adding any custom field to post.
 Use another action which will occur just after `tscp_epired_status`.
 
-```
+<pre>
 <?php
 // do something just after post status is/isn't changed.
 add_action( 'tscp_post_expired', function( $post ) {
@@ -53,7 +52,7 @@ add_action( 'tscp_post_expired', function( $post ) {
    // But add some custom fields
    update_post_meta( $post->ID, '_not_in_front_page', true );
 } );
-```
+</pre>
 
 ### Change frequency of expiration check
 
@@ -61,13 +60,12 @@ If you are low-resource environment, you might need low frequency.
 For example, you site allow post to be expired within 10 min.
 Use hook to delay interval.
 
-```
-<?php
+<pre>
 add_filter( 'tscp_cron_interval', function() {
   // Change interval from 60 sec to 600 sec.
   return 600;
 } );
-```
+</pre>
 
 ## Changelog
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2017-06-02 12:50+0900\n"
-"PO-Revision-Date: 2017-06-02 12:51+0900\n"
+"PO-Revision-Date: 2017-06-02 20:15+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -44,7 +44,7 @@ msgstr "期限切れ日時"
 
 #: includes/setting.php:12
 msgid "Post Expiration Setting"
-msgstr "期限切れになる投稿の設定"
+msgstr "投稿の有効期限"
 
 #: includes/setting.php:16
 msgid "These settings are used by Taro Clockwork Post for post expiration."

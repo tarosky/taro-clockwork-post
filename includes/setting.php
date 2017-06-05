@@ -19,7 +19,7 @@ add_action( 'admin_init', function() {
 		'reading'
 	);
 
-	// Add settings to setion
+	// Add settings to section
 	add_settings_field(
 		'tscp_post_types',
 		__( 'Post Types', 'tscp' ),
