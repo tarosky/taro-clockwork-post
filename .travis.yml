@@ -30,5 +30,5 @@ before_script:
 - npm install && npm run package
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 script:
-- phpunit
+- vendor/bin/phpunit
 after_success: curl -L https://raw.githubusercontent.com/miya0001/travis2wpplugin/master/deploy.sh | bash
