@@ -1,0 +1,19 @@
+{
+    "name": "tarosky/taro-clockwork-post",
+    "description": "A WordPress plugin to expire post.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "tarosky",
+            "email": "info@tarosky.co.jp"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~4.8",
+        "squizlabs/php_codesniffer": "~2.8",
+        "wp-coding-standards/wpcs": "~0.11"
+    }
+}

@@ -56,7 +56,10 @@ add_action( 'add_meta_boxes', function( $post_type ) {
 				</span>
 					<?php if ( current_user_can( 'manage_options' ) ) : ?>
 						<span class="description">
-						<?php printf( __( 'You can choose post type to be expired at <a href="%s">setting</a>.', 'tscp' ), admin_url( 'wp-admin/options-reading.php' ) ) ?>
+						<?php
+						// translators: %s means admin URL.
+						printf( __( 'You can choose post type to be expired at <a href="%s">setting</a>.', 'tscp' ), admin_url( 'wp-admin/options-reading.php' ) );
+						?>
 					</span>
 					<?php endif; ?>
 				</span>
@@ -108,7 +111,7 @@ add_action( 'admin_init', function() {
 			return $columns;
 		}
 	}, 10, 2 );
-	foreach ($post_types as $post_type ) {
+	foreach ( $post_types as $post_type ) {
 		add_action( "manage_{$post_type}_posts_custom_column", function( $column, $post_id ) use ( $post_type ) {
 			switch ( $column ) {
 				case 'expires':

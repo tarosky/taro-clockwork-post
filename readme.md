@@ -56,7 +56,7 @@ add_action( 'tscp_post_expired', function( $post ) {
 ### Change frequency of expiration check
 
 If you are low-resource environment, you might need low frequency.
-For example, you site allow post to be expired within 10 min.
+For example, assume that your site allows posts to be expired within 10 min.
 Use hook to delay interval.
 
 <pre>

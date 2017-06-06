@@ -27,7 +27,7 @@ function tscp_get_expired_posts() {
 				'key' => '_tscp_expires',
 				'value' => current_time( 'mysql' ),
 				'compare' => '<',
-				'type' => 'DATETIME'
+				'type' => 'DATETIME',
 			],
 		],
 	] );
@@ -44,7 +44,9 @@ function tscp_get_expired_posts() {
  */
 function tscp_will_expire( $post = null ) {
 	$post = get_post( $post );
-	if ( 'publish' != $post->post_status ) {
+	if ( ! $post ) {
+		$will_expire = false;
+	} elseif ( 'publish' != $post->post_status ) {
 		$will_expire = false;
 	} elseif ( ! get_post_meta( $post->ID, '_tscp_should_expire', true ) ) {
 		$will_expire = false;
