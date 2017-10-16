@@ -30,14 +30,14 @@ add_filter( 'cron_schedules', function ( array $schedules ) {
 	return $schedules;
 } );
 
-// Register cron if not
+// Register cron if not.
 add_action( 'init', function () {
 	if ( ! wp_next_scheduled( TSCP_EVENT_NAME ) ) {
 		wp_schedule_event( current_time( 'timestamp', true ), TSCP_SCHEDULE_NAME, TSCP_EVENT_NAME );
 	}
 } );
 
-// Cron handler to expire all
+// Cron handler to expire all.
 add_action( TSCP_EVENT_NAME, function () {
 	foreach ( tscp_get_expired_posts() as $post ) {
 		/**
@@ -70,7 +70,7 @@ add_action( TSCP_EVENT_NAME, function () {
 	update_option( 'tscp_cron_executed', current_time( 'mysql' ) );
 } );
 
-// Register debug cron
+// Register debug cron.
 add_action( 'admin_notices', function () {
 	if ( current_user_can( 'manage_options' ) ) {
 		$last_executed = get_option( 'tscp_cron_executed', false );

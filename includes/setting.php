@@ -36,12 +36,13 @@ add_action( 'admin_init', function() {
 					esc_html( $post_type->label )
 				);
 			}
+			printf( '<p class="description">%s</p>', esc_html__( 'Specified post types will have expiration field.', 'tscp' ) );
 		},
 		'reading',
 		'tscp_setting'
 	);
 
-	// Automatic save
+	// Automatic save.
 	register_setting( 'reading', 'tscp_post_types' );
 
 } );

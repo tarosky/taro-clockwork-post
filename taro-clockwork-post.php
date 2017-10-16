@@ -4,7 +4,7 @@ Plugin Name: Taro Clockwork Post
 Plugin URI: https://github.com/tarosky/taro-clockwork-post
 Description: You can expire post with specified date.
 Author: TAROSKY INC. <mng_wpcom@tarosky.co.jp>
-Version: 1.0.0
+Version: 1.0.1
 Author URI: https://tarosky.co.jp
 Text Domain: tscp
 Domain Path: /languages/

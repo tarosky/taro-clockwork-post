@@ -4,8 +4,8 @@ Taro Clockwork Post
 Contributors: tarosky,Takahashi_Fumiki  
 Tags: post, media, expiration  
 Requires at least: 4.7.0  
-Tested up to: 4.7.5  
-Stable tag: 1.0.0  
+Tested up to: 4.8.2  
+Stable tag: 1.0.1  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt  
 
@@ -67,6 +67,11 @@ add_filter( 'tscp_cron_interval', function() {
 </pre>
 
 ## Changelog
+
+### 1.0.1
+
+* Fix broken link on edit screen.
+* Add unit test for expiration process.
 
 ### 1.0.0
 

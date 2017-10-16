@@ -58,7 +58,7 @@ add_action( 'add_meta_boxes', function( $post_type ) {
 						<span class="description">
 						<?php
 						// translators: %s means admin URL.
-						printf( __( 'You can choose post type to be expired at <a href="%s">setting</a>.', 'tscp' ), admin_url( 'wp-admin/options-reading.php' ) );
+						printf( __( 'You can choose post type to be expired at <a href="%s" target="_blank">setting</a>.', 'tscp' ), esc_url( admin_url( 'options-reading.php' ) ) );
 						?>
 					</span>
 					<?php endif; ?>
