@@ -24,17 +24,15 @@ add_action( 'plugins_loaded', 'tscp_plugins_loaded' );
  */
 function tscp_plugins_loaded() {
 	load_plugin_textdomain( 'tscp', false, basename( dirname( __FILE__ ) ) . '/languages' );
-	if ( version_compare( phpversion(), '5.4.0', '<' ) ) {
+	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
 		add_action( 'admin_notices', 'tscp_plugin_notice' );
 	} else {
 		// Load all includes.
-		$dir = __DIR__ . '/includes';
-		foreach ( scandir( $dir ) as $file ) {
-			$path = $dir . '/' . $file;
-			if ( preg_match( '#^[^_.].*\.php$#', $path ) ) {
-				require $path;
-			}
-		}
+		require_once __DIR__ . '/includes/functions.php';
+		require_once __DIR__ . '/includes/setting.php';
+		require_once __DIR__ . '/includes/cron.php';
+		require_once __DIR__ . '/includes/meta-box.php';
+		require_once __DIR__ . '/includes/block-editor.php';
 	}
 }
 
@@ -46,7 +44,7 @@ function tscp_plugins_loaded() {
  */
 function tscp_plugin_notice() {
 	/* translators: %s current php version */
-	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.4.0 and over but your %s.', 'tscp' ), phpversion() );
+	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.6.0 and over but your %s.', 'tscp' ), phpversion() );
 	printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 }
 

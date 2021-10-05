@@ -69,6 +69,10 @@ add_filter( 'tscp_cron_interval', function() {
 
 ## Changelog
 
+### 1.1.0
+
+* Support block editor.
+
 ### 1.0.1
 
 * Fix broken link on edit screen.
