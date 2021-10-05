@@ -24,8 +24,11 @@ add_action( 'admin_init', function() {
 		'tscp_post_types',
 		__( 'Post Types', 'tscp' ),
 		function() {
-			$post_types = (array) get_option( 'tscp_post_types', [ 'post' ] );
-			foreach ( get_post_types( [], OBJECT ) as $post_type ) {
+			$post_types = tscp_post_types();
+			foreach ( get_post_types( [ 'public' => true ], OBJECT ) as $post_type ) {
+				if ( 'attachment' === $post_type->name ) {
+					continue;
+				}
 				if ( false !== array_search( $post_type->name, [ 'revision', 'attachment', 'atuo-save', 'nav_menu_item' ] ) ) {
 					continue;
 				}

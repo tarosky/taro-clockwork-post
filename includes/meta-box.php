@@ -21,26 +21,26 @@ add_action( 'add_meta_boxes', function( $post_type ) {
 				$one_month_later = $now->format( 'Y-m-d H:i:s' );
 				$date_time       = apply_filters( 'tspc_default_expires', $one_month_later, $post );
 			}
-			list( $date, $time ) = explode( ' ', $date_time );
+			list( $date, $time )        = explode( ' ', $date_time );
 			list( $year, $month, $day ) = explode( '-', $date );
-			list( $hour, $minute ) = explode( ':', $time );
+			list( $hour, $minute )      = explode( ':', $time );
 			?>
 			<div class="misc-pub-section misc-pub-tscp">
 				<span class="tscp-wrapper">
 				<input class="tscp-toggler" type="checkbox" id="tscp-should-expire" value="1"
-					   name="tscp-should-expire" <?php checked( get_post_meta( $post->ID, '_tscp_should_expire', true ) ) ?> />
+					   name="tscp-should-expire" <?php checked( get_post_meta( $post->ID, '_tscp_should_expire', true ) ); ?> />
 				<label class="tscp-field-label" for="tscp-should-expire">
-					<?php esc_html_e( 'Expires at specified time', 'tscp' ) ?>
+					<?php esc_html_e( 'Expires at specified time', 'tscp' ); ?>
 				</label>
 				<span class="tscp-date-selector">
 					<?php
 					$year_input  = sprintf( '<input type="text" name="tscp-year" class="tscp-long" value="%s" />', esc_attr( $year ) );
 					$month_input = '<select name="tscp-month" class="tscp-month">';
 					for ( $i = 1; $i <= 12; $i ++ ) {
-						$month_str   = mysql2date( 'M', str_replace( '-00-', sprintf( '-%02d-', $i ), date_i18n( 'Y-00-d' ) ) );
+						$month_str    = mysql2date( 'M', str_replace( '-00-', sprintf( '-%02d-', $i ), date_i18n( 'Y-00-d' ) ) );
 						$month_input .= sprintf( '<option value="%02d" %s>%s</option>', $i, selected( $i == $month, true, false ), $month_str );
 					}
-					$month_input  .= '</select>';
+					$month_input .= '</select>';
 					$day_input    = sprintf( '<input type="text" name="tscp-day" class="tscp-short" value="%s" />', esc_attr( $day ) );
 					$hour_input   = sprintf( '<input type="text" name="tscp-hour" class="tscp-short" value="%s" />', esc_attr( $hour ) );
 					$minute_input = sprintf( '<input type="text" name="tscp-minute" class="tscp-short" value="%s" />', esc_attr( $minute ) );
@@ -69,16 +69,22 @@ add_action( 'add_meta_boxes', function( $post_type ) {
 	}
 } );
 
-// Save post
-add_action( 'save_post', function( $post_id ) {
-	if ( wp_is_post_autosave( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+/**
+ * Save post from meta box.
+ *
+ * @param int     $post_id Post ID.
+ * @param WP_Post $post Post object.
+ */
+add_action( 'save_post', function( $post_id, $post ) {
+	if ( ! tscp_post_type_can_expire( $post->post_type ) ) {
 		return;
 	}
-	if ( ! isset( $_POST['_tscpnonce'] ) || ! wp_verify_nonce( $_POST['_tscpnonce'], 'tscp_date' ) ) {
+	if ( ! wp_verify_nonce( filter_input( INPUT_POST, '_tscpnonce' ), 'tscp_date' ) ) {
 		return;
 	}
 	// Save flag
-	if ( isset( $_POST['tscp-should-expire'] ) && $_POST['tscp-should-expire'] ) {
+	$should_expire = filter_input( INPUT_POST, 'tscp-should-expire' );
+	if ( $should_expire ) {
 		update_post_meta( $post_id, '_tscp_should_expire', 1 );
 	} else {
 		delete_post_meta( $post_id, '_tscp_should_expire' );
@@ -86,8 +92,11 @@ add_action( 'save_post', function( $post_id ) {
 	// Build data and save it.
 	$date = sprintf(
 		'%04d-%02d-%02d %02d:%02d:59',
-		$_POST['tscp-year'], $_POST['tscp-month'], $_POST['tscp-day'],
-		$_POST['tscp-hour'], $_POST['tscp-minute']
+		filter_input( INPUT_POST, 'tscp-year' ),
+		filter_input( INPUT_POST, 'tscp-month' ),
+		filter_input( INPUT_POST, 'tscp-day' ),
+		filter_input( INPUT_POST, 'tscp-hour' ),
+		filter_input( INPUT_POST, 'tscp-minute' )
 	);
 	update_post_meta( $post_id, '_tscp_expires', $date );
 }, 10, 2 );
