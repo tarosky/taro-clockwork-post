@@ -12,6 +12,8 @@ add_action( 'enqueue_block_editor_assets', function() {
 	// Register script
 	wp_enqueue_script( 'tscp-editor-input', tscp_asset_url( 'js/editor-input.js' ), [ 'wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-i18n', 'wp-compose', 'wp-element', 'wp-api-fetch' ], tscp_version(), true );
 	wp_enqueue_style( 'tscp-editor-input', tscp_asset_url( 'css/editor-input.css' ), [ 'wp-components' ], tscp_version() );
+	// translattions.
+	wp_set_script_translations( 'tscp-editor-input', 'tscp' );
 	// Register variables.
 	wp_localize_script( 'tscp-editor-input', 'TscpEditorInput', [
 		'postTypes' => tscp_post_types(),
@@ -29,15 +31,15 @@ add_action( 'rest_api_init', function() {
 
 	$args = [
 		'post_type' => [
-			'required' => true,
-			'type'     => 'string',
+			'required'          => true,
+			'type'              => 'string',
 			'validate_callback' => function( $post_type ) {
 				return tscp_post_type_can_expire( $post_type );
 			},
 		],
-		'post_id' => [
-			'required' => true,
-			'type'     => 'int',
+		'post_id'   => [
+			'required'          => true,
+			'type'              => 'int',
 			'validate_callback' => function( $post_id ) {
 				return is_numeric( $post_id ) && get_post( $post_id );
 			},
@@ -65,8 +67,8 @@ add_action( 'rest_api_init', function() {
 					'type'     => 'bool',
 				],
 				'expires' => [
-					'required' => true,
-					'type'     => 'string',
+					'required'          => true,
+					'type'              => 'string',
 					'validate_callback' => function( $date ) {
 						return empty( $date ) || preg_match( '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/u', $date );
 					},
