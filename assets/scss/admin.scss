@@ -1,51 +1,61 @@
-.tscp{
+.tscp {
 
-  &-toggler{
-    &:checked + label + .tscp-date-selector{
-      display: block;
-    }
-  }
+	&-toggler {
+		&:checked + label + .tscp-date-selector {
+			display: block;
+		}
+	}
 
-  &-date-selector{
-    display: none;
-    margin-top: 10px;
-    & + .description{
-      display: block;
-      margin-top: 5px;
-      font-size: 0.85em;
-      color: #666;
-    }
-  }
-  &-month{
-    width: 4em;
-  }
-  &-long{
-    width: 3.5em;
-  }
-  &-short{
-    width: 2em;
-  }
+	&-date-selector {
+		display: none;
+		margin-top: 10px;
+
+		+ .description {
+			display: block;
+			margin-top: 5px;
+			font-size: 0.85em;
+			color: #666;
+		}
+	}
+
+	&-month {
+		width: 4em;
+	}
+
+	&-long {
+		width: 3.5em;
+	}
+
+	&-short {
+		width: 2em;
+	}
 }
 
 
-.column-expires{
-  width: 2em;
-  text-align: center;
-  thead &, tfoot &{
-    text-align: center;
-    .dashicons{
-      color: #888;
-    }
-  }
-  .dashicons{
-    &-yes{
-      color: #4fb061;
-    }
-    &-minus{
-      color: #ddd;
-    }
-    &-no{
-      color: #ff3b35;
-    }
-  }
+.column-expires {
+	width: 2em;
+	text-align: center;
+
+	thead &,
+	tfoot & {
+		text-align: center;
+
+		.dashicons {
+			color: #888;
+		}
+	}
+
+	.dashicons {
+		&-yes {
+			color: #4fb061;
+		}
+
+		&-minus {
+			color: #ddd;
+		}
+
+		&-no {
+			color: #ff3b35;
+		}
+	}
 }

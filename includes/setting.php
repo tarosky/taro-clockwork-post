@@ -29,13 +29,10 @@ add_action( 'admin_init', function() {
 				if ( 'attachment' === $post_type->name ) {
 					continue;
 				}
-				if ( false !== array_search( $post_type->name, [ 'revision', 'attachment', 'atuo-save', 'nav_menu_item' ] ) ) {
-					continue;
-				}
 				printf(
 					'<label style="display: inline-block; margin: 0 1em 1em 0;"><input type="checkbox" name="tscp_post_types[]" value="%s" %s /> %s</label>',
 					esc_attr( $post_type->name ),
-					checked( ( false !== array_search( $post_type->name, $post_types ) ), true, false ),
+					checked( in_array( $post_type->name, $post_types, true ), true, false ),
 					esc_html( $post_type->label )
 				);
 			}

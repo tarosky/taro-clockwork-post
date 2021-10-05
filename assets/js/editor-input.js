@@ -18,21 +18,21 @@ const { __, sprintf } = wp.i18n;
 
 const toLocalDate = ( date ) => {
 	if ( date.match( /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):\d{2}/ ) ) {
+		// eslint-disable-next-line @wordpress/valid-sprintf
 		return sprintf( '%04d-%02d-%02dT%02d:%02d', RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5 );
-	} else {
-		return '';
 	}
+	return '';
 };
 
 const toDate = ( localDate ) => {
 	if ( localDate.match( /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/ ) ) {
+		// eslint-disable-next-line @wordpress/valid-sprintf
 		return sprintf( '%04d-%02d-%02d %02d:%02d:59', RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5 );
-	} else {
-		return '';
 	}
+	return '';
 };
 
-const notice = ( message, status = 'success' ) => {
+const notify = ( message, status = 'success' ) => {
 	dispatch( 'core/notices' ).createNotice( status, message, {
 		type: 'snackbar',
 		isDismissible: true,
@@ -72,12 +72,11 @@ const TscpPostExpireBox = withState( {
 					expires: d,
 				}
 			} ).then( ( res ) => {
-				notice( res.message );
+				notify( res.message );
 			} ).catch( ( res ) => {
-				notice( res.message, 'error' );
+				notify( res.message, 'error' );
 			} );
 		}, 500 );
-		console.log( 'SYNCING: ', a, d );
 	};
 
 	// Initialize.
@@ -94,7 +93,7 @@ const TscpPostExpireBox = withState( {
 				} );
 			} ).catch( res => {
 				setState( { loading: false }, () => {
-					notice( res.message, 'error' );
+					notify( res.message, 'error' );
 				} );
 			} );
 		}
