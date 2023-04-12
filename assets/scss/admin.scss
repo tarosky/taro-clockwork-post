@@ -1,3 +1,4 @@
+
 .tscp {
 
 	&-toggler {
@@ -18,15 +19,24 @@
 		}
 	}
 
+	&-month,
+	&-long,
+	&-short {
+		box-sizing: border-box;
+		padding: 0 3px !important;
+	}
+
 	&-month {
-		width: 4em;
+		width: 4.5em;
 	}
 
 	&-long {
 		width: 3.5em;
+		text-align: right;
 	}
 
 	&-short {
+		text-align: right;
 		width: 2em;
 	}
 }
