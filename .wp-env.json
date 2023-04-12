@@ -1,5 +1,8 @@
 {
-	"plugins": ["."],
+	"plugins": [
+		".",
+		"https://downloads.wordpress.org/plugin/classic-editor.latest-stable.zip"
+	],
 	"themes": [
 		"https://downloads.wordpress.org/theme/twentytwenty.latest-stable.zip"
 	],

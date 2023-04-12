@@ -3,9 +3,9 @@ Taro Clockwork Post
 
 Contributors: tarosky,Takahashi_Fumiki  
 Tags: post, media, expiration  
-Requires at least: 5.5.0  
-Requires PHP: 5.6  
-Tested up to: 5.8  
+Requires at least: 5.9  
+Requires PHP: 7.2  
+Tested up to: 6.1  
 Stable tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt  
@@ -68,6 +68,11 @@ add_filter( 'tscp_cron_interval', function() {
 </pre>
 
 ## Changelog
+
+### 1.2.0
+
+* Bump required PHP version.
+* Fix editor UI.
 
 ### 1.1.0
 
