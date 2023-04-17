@@ -16,7 +16,8 @@
     "watch": "gulp watch",
     "gulp": "gulp",
     "lint": "gulp lint",
-    "gulp:task": "gulp --tasks"
+    "gulp:task": "gulp --tasks",
+	"test": "wp-env run tests-cli ./wp-content/plugins/taro-clockwork-post/vendor/bin/phpunit -c ./wp-content/plugins/taro-clockwork-post/phpunit.xml.dist"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
-    "@wordpress/env": "^4.0",
+    "@wordpress/env": "^5.0",
     "@wordpress/eslint-plugin": "^9.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
