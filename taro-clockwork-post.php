@@ -23,7 +23,7 @@ add_action( 'plugins_loaded', 'tscp_plugins_loaded' );
  * @package tscp
  */
 function tscp_plugins_loaded() {
-	load_plugin_textdomain( 'tscp', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'tscp', false, basename( __DIR__ ) . '/languages' );
 	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
 		add_action( 'admin_notices', 'tscp_plugin_notice' );
 	} else {

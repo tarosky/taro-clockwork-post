@@ -5,7 +5,7 @@ Contributors: tarosky,Takahashi_Fumiki
 Tags: post, media, expiration  
 Requires at least: 5.9  
 Requires PHP: 7.2  
-Tested up to: 6.1  
+Tested up to: 6.5  
 Stable tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt  
@@ -68,6 +68,11 @@ add_filter( 'tscp_cron_interval', function() {
 </pre>
 
 ## Changelog
+
+### 1.2.1
+
+* Available post type are expanded to all post types with <code>show_ui = true</code>.
+* Remove <code>withState</code> from editor script.
 
 ### 1.2.0
 
