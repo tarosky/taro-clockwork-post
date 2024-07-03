@@ -25,10 +25,12 @@ add_action( 'admin_init', function() {
 		__( 'Post Types', 'tscp' ),
 		function() {
 			$post_types = tscp_post_types();
-			foreach ( get_post_types( [ 'public' => true ], OBJECT ) as $post_type ) {
-				if ( 'attachment' === $post_type->name ) {
-					continue;
-				}
+			$available_post_type_list = get_post_types( [ 'show_ui' => true ], OBJECT );
+			$available_post_type_list = array_values( array_filter( $available_post_type_list, function( WP_Post_Type $post_type ) {
+				return ! in_array( $post_type->name, [ 'attachment', 'wp_navigation', 'wp_block' ], true );
+			} ) );
+			$available_post_type_list = apply_filters( 'tscp_available_post_type_list', $available_post_type_list );
+			foreach ( $available_post_type_list as $post_type ) {
 				printf(
 					'<label style="display: inline-block; margin: 0 1em 1em 0;"><input type="checkbox" name="tscp_post_types[]" value="%s" %s /> %s</label>',
 					esc_attr( $post_type->name ),
