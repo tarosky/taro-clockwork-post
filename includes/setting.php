@@ -6,11 +6,11 @@
  */
 
 // Register setting fields
-add_action( 'admin_init', function() {
+add_action( 'admin_init', function () {
 	add_settings_section(
 		'tscp_setting',
 		__( 'Post Expiration Setting', 'tscp' ),
-		function() {
+		function () {
 			printf(
 				'<p class="description">%s</p>',
 				__( 'These settings are used by Taro Clockwork Post for post expiration.', 'tscp' )
@@ -23,10 +23,10 @@ add_action( 'admin_init', function() {
 	add_settings_field(
 		'tscp_post_types',
 		__( 'Post Types', 'tscp' ),
-		function() {
-			$post_types = tscp_post_types();
+		function () {
+			$post_types               = tscp_post_types();
 			$available_post_type_list = get_post_types( [ 'show_ui' => true ], OBJECT );
-			$available_post_type_list = array_values( array_filter( $available_post_type_list, function( WP_Post_Type $post_type ) {
+			$available_post_type_list = array_values( array_filter( $available_post_type_list, function ( WP_Post_Type $post_type ) {
 				return ! in_array( $post_type->name, [ 'attachment', 'wp_navigation', 'wp_block' ], true );
 			} ) );
 			$available_post_type_list = apply_filters( 'tscp_available_post_type_list', $available_post_type_list );
@@ -46,7 +46,4 @@ add_action( 'admin_init', function() {
 
 	// Automatic save.
 	register_setting( 'reading', 'tscp_post_types' );
-
 } );
-
-

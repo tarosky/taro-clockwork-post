@@ -5,14 +5,14 @@
  * @package tscp
  */
 
-add_action( 'admin_enqueue_scripts', function() {
+add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_style( 'tscp-admin-helper', tscp_asset_url( 'css/admin.css' ), [], tscp_version() );
 } );
 
 // Register meta box for specified posts
-add_action( 'add_meta_boxes', function( $post_type ) {
+add_action( 'add_meta_boxes', function ( $post_type ) {
 	if ( tscp_post_type_can_expire( $post_type ) ) {
-		add_action( 'post_submitbox_misc_actions', function( $post ) {
+		add_action( 'post_submitbox_misc_actions', function ( $post ) {
 			wp_nonce_field( 'tscp_date', '_tscpnonce', false );
 			$date_time = get_post_meta( $post->ID, '_tscp_expires', true );
 			if ( ! $date_time ) {
@@ -36,10 +36,10 @@ add_action( 'add_meta_boxes', function( $post_type ) {
 					<?php
 					$year_input  = sprintf( '<input type="text" name="tscp-year" class="tscp-long" value="%s" />', esc_attr( $year ) );
 					$month_input = '<select name="tscp-month" class="tscp-month">';
-					for ( $i = 1; $i <= 12; $i ++ ) {
+					for ( $i = 1; $i <= 12; $i++ ) {
 						$month_str = mysql2date( 'M', str_replace( '-00-', sprintf( '-%02d-', $i ), date_i18n( 'Y-00-d' ) ) );
 						// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-						$month_input .= sprintf( '<option value="%02d" %s>%s</option>', $i, selected( $i == $month, true, false ), $month_str );
+						$month_input .= sprintf( '<option value="%02d" %s>%s</option>', $i, selected( $i, $month, false ), $month_str );
 					}
 					$month_input .= '</select>';
 					$day_input    = sprintf( '<input type="text" name="tscp-day" class="tscp-short" value="%s" />', esc_attr( $day ) );
@@ -76,7 +76,7 @@ add_action( 'add_meta_boxes', function( $post_type ) {
  * @param int     $post_id Post ID.
  * @param WP_Post $post Post object.
  */
-add_action( 'save_post', function( $post_id, $post ) {
+add_action( 'save_post', function ( $post_id, $post ) {
 	if ( ! tscp_post_type_can_expire( $post->post_type ) ) {
 		return;
 	}
@@ -104,10 +104,10 @@ add_action( 'save_post', function( $post_id, $post ) {
 
 
 // Register post custom column
-add_action( 'admin_init', function() {
+add_action( 'admin_init', function () {
 	$post_types = array_filter( (array) get_option( 'tscp_post_types', [ 'post' ] ), 'post_type_exists' );
 	// Register post column
-	add_filter( 'manage_posts_columns', function( $columns, $post_type ) use ( $post_types ) {
+	add_filter( 'manage_posts_columns', function ( $columns, $post_type ) use ( $post_types ) {
 		if ( in_array( $post_type, $post_types, true ) ) {
 			$new_columns = [];
 			foreach ( $columns as $key => $val ) {
@@ -122,7 +122,7 @@ add_action( 'admin_init', function() {
 		}
 	}, 10, 2 );
 	foreach ( $post_types as $post_type ) {
-		add_action( "manage_{$post_type}_posts_custom_column", function( $column, $post_id ) use ( $post_type ) {
+		add_action( "manage_{$post_type}_posts_custom_column", function ( $column, $post_id ) use ( $post_type ) {
 			switch ( $column ) {
 				case 'expires':
 					$will_expire = tscp_will_expire( $post_id );
