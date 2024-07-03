@@ -44,16 +44,17 @@ const notify = ( message, status = 'success' ) => {
 
 let storedUpdated = null;
 
-const TscpPostExpireBox = ( attributes ) => {
+const TscpPostExpireBox = () => {
+	// Nescessary variables.
 	const postType = select( 'core/editor' ).getCurrentPostType();
-	if ( 0 > TscpEditorInput.postTypes.indexOf( postType ) ) {
-		// This is not supported.
-		return null;
-	}
 	const [ active, setActive ] = useState( false );
 	const [ date, setDate ] = useState( '' );
 	const [ loading, setLoading ] = useState( false );
 	const [ timer, setTimer ] = useState( null );
+	if ( 0 > TscpEditorInput.postTypes.indexOf( postType ) ) {
+		// This is not supported.
+		return null;
+	}
 	const postId = select( 'core/editor' ).getCurrentPostId();
 	const path = sprintf( 'clockwork/v1/%1$s/%2$d/expiration', postType, postId );
 
@@ -79,6 +80,7 @@ const TscpPostExpireBox = ( attributes ) => {
 	};
 
 	// Initialize.
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	useEffect( () => {
 		if ( storedUpdated === null ) {
 			storedUpdated = '';

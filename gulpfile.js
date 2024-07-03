@@ -71,7 +71,8 @@ gulp.task( 'eslint', function () {
 		task = task.pipe( $.plumber() );
 	}
 	return task.pipe( $.eslint( { useEslintrc: true } ) )
-		.pipe( $.eslint.format() );
+		.pipe( $.eslint.format() )
+		.pipe( $.eslint.failAfterError() );
 } );
 
 // Copy bundles.
