@@ -19,6 +19,16 @@
             "email": "info@tarosky.co.jp"
         }
     ],
+	"repositories":[
+		{
+			"type":"composer",
+			"url":"https://wpackagist.org",
+			"only": [
+				"wpackagist-plugin/*",
+				"wpackagist-theme/*"
+			]
+		}
+	],
     "require": {
         "php": ">=7.2"
     },
@@ -28,12 +38,21 @@
         "wp-coding-standards/wpcs": "^2.0",
         "yoast/phpunit-polyfills": "^1.0",
 		"phpcompatibility/php-compatibility": "^9.3",
-		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "wpackagist-plugin/taro-ad-fields": "^1.2"
 
 	},
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true
         }
-    }
+    },
+	"extra": {
+		"installer-paths": {
+			"vendor/plugins/{$name}/": [
+				"type:wordpress-plugin"
+			]
+		}
+	}
 }

@@ -2,7 +2,7 @@
  * Editor input.
  *
  * @handle tscp-editor-input
- * @deps wp-plugins, wp-edit-post, wp-components, wp-data, wp-api-fetch, wp-i18n, wp-compose, wp-element
+ * @deps wp-plugins, wp-edit-post, wp-components, wp-data, wp-api-fetch, wp-i18n, wp-element
  */
 
 /* global TscpEditorInput: false */
@@ -10,8 +10,7 @@
 const { registerPlugin } = wp.plugins;
 const { PluginPostStatusInfo } = wp.editPost;
 const { ToggleControl, TextControl, Spinner } = wp.components;
-const { withState } = wp.compose;
-const { useEffect } = wp.element;
+const { useEffect, useState } = wp.element;
 const { select, dispatch } = wp.data;
 const { apiFetch } = wp;
 const { __, sprintf } = wp.i18n;
@@ -41,42 +40,42 @@ const notify = ( message, status = 'success' ) => {
 			dispatch( 'core/notices' ).removeNotice( notice.id );
 		}, 2000 );
 	} );
-}
+};
 
 let storedUpdated = null;
 
-const TscpPostExpireBox = withState( {
-	active: false,
-	date: '',
-	loading: true,
-	timer: null,
-} )( ( { setState, loading, active, date, timer } ) => {
+const TscpPostExpireBox = ( attributes ) => {
 	const postType = select( 'core/editor' ).getCurrentPostType();
 	if ( 0 > TscpEditorInput.postTypes.indexOf( postType ) ) {
 		// This is not supported.
 		return null;
 	}
+	const [ active, setActive ] = useState( false );
+	const [ date, setDate ] = useState( '' );
+	const [ loading, setLoading ] = useState( false );
+	const [ timer, setTimer ] = useState( null );
 	const postId = select( 'core/editor' ).getCurrentPostId();
 	const path = sprintf( 'clockwork/v1/%1$s/%2$d/expiration', postType, postId );
 
 	const sync = ( a, d ) => {
 		if ( timer ) {
 			clearTimeout( timer );
+			setTimer( null );
 		}
-		setTimeout( () => {
+		setTimer( setTimeout( () => {
 			apiFetch( {
 				path,
 				method: 'post',
 				data: {
 					should: a,
 					expires: d,
-				}
+				},
 			} ).then( ( res ) => {
 				notify( res.message );
 			} ).catch( ( res ) => {
 				notify( res.message, 'error' );
 			} );
-		}, 500 );
+		}, 500 ) );
 	};
 
 	// Initialize.
@@ -84,20 +83,17 @@ const TscpPostExpireBox = withState( {
 		if ( storedUpdated === null ) {
 			storedUpdated = '';
 			apiFetch( {
-				path
-			} ).then( res => {
-				setState( {
-					loading: false,
-					active: res.should_expires,
-					date: toLocalDate( res.expires ),
-				} );
-			} ).catch( res => {
-				setState( { loading: false }, () => {
-					notify( res.message, 'error' );
-				} );
+				path,
+			} ).then( ( res ) => {
+				setLoading( false );
+				setActive( res.should_expires );
+				setDate( toLocalDate( res.expires ) );
+			} ).catch( ( res ) => {
+				setLoading( false );
+				notify( res.message, 'error' );
 			} );
 		}
-	} );
+	}, [] );
 
 	return (
 		<PluginPostStatusInfo className="tscp-time-input">
@@ -111,23 +107,21 @@ const TscpPostExpireBox = withState( {
 				label={ __( 'Expires at specified time', 'tscp' ) }
 				checked={ active }
 				onChange={ ( isActive ) => {
-					setState( { active: isActive }, () => {
-						sync( isActive, toDate( date ) );
-					} )
+					setActive( isActive );
+					sync( isActive, toDate( date ) );
 				} }
 			/>
 			{ active && (
 				<TextControl label={ __( 'Expires At', 'tscp' ) } className="tscp-time-input-date" type="datetime-local"
 					value={ date }
-					onChange={ ( newDate => {
-						setState( { date: newDate }, () => {
-							sync( active, toDate( newDate ) );
-						} );
+					onChange={ ( ( newDate ) => {
+						setDate( newDate );
+						sync( active, toDate( newDate ) );
 					} ) }
 				/>
 			) }
 		</PluginPostStatusInfo>
 	);
-} );
+};
 
 registerPlugin( 'tscp-post-expire-box', { render: TscpPostExpireBox } );
