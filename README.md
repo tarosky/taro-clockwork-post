@@ -17,8 +17,6 @@ A WordPress plugin to expire post with specified date.
 You can enter expiration date on edit screen.
 This plugin runs cron every minute to search expired posts and make them `private`.
 
-**NOTICE** This plugin requires PHP 5.6 and over.
-
 ## Installation
 
 1. Upload the plugin files to the `/wp-content/plugins/taro-clockwork-post` directory, or install the plugin through the WordPress plugins screen directly.
@@ -68,6 +66,10 @@ add_filter( 'tscp_cron_interval', function() {
 </pre>
 
 ## Changelog
+
+### 1.2.2
+
+* Fix deploy script to avoid incorrect versioning.
 
 ### 1.2.1
 
