@@ -17,7 +17,7 @@ gulp.task( 'sass', function () {
 		} ) )
 		.pipe( $.sassGlob() )
 		.pipe( $.sourcemaps.init() )
-		.pipe( $.sass( {
+		.pipe( $.sass( require( 'sass' ) )( {
 			errLogToConsole: true,
 			outputStyle: 'compressed',
 			sourceComments: false,
