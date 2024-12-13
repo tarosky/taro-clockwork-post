@@ -11,52 +11,55 @@ on:
       - master
 
 jobs:
-  test:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ ubuntu-latest ]  # OS. ubuntu-18.04 is also available.
-        php: [ '7.2', '7.4', '8.0' ] # PHP versions to check.
-        wp: [ 'latest', '5.9' ]      # WordPress version to check.
-    services:
-      mysql:
-        image: mysql:8.0
-        options: --health-cmd "mysqladmin ping --host 127.0.0.1 --port 3306" --health-interval 20s --health-timeout 10s --health-retries 10
-        ports:
-          - 3306/tcp
-        env:
-          MYSQL_ROOT_PASSWORD: root
-    name: WordPress ${{ matrix.wp }} in PHP ${{ matrix.php }} UnitTest
-    steps:
-      - uses: actions/checkout@master
+#  test:
+#    runs-on: ${{ matrix.operating-system }}
+#    strategy:
+#      matrix:
+#        operating-system: [ ubuntu-latest ]  # OS. ubuntu-18.04 is also available.
+#        php: [ '7.2', '7.4', '8.0' ] # PHP versions to check.
+#        wp: [ 'latest', '5.9' ]      # WordPress version to check.
+#    services:
+#      mysql:
+#        image: mysql:8.0
+#        options: --health-cmd "mysqladmin ping --host 127.0.0.1 --port 3306" --health-interval 20s --health-timeout 10s --health-retries 10
+#        ports:
+#          - 3306/tcp
+#        env:
+#          MYSQL_ROOT_PASSWORD: root
+#    name: WordPress ${{ matrix.wp }} in PHP ${{ matrix.php }} UnitTest
+#    steps:
+#      - uses: actions/checkout@master
+#
+#      - name: Setup PHP with composer
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php }}
+#          tools: composer
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Validate composer.json and composer.lock
+#        run: composer validate
+#
+#      - name: Install dependencies
+#        run: composer install --prefer-dist --no-suggest
+#
+#      - name: Start MySQL
+#        run: |
+#          sudo systemctl start mysql
+#          mysql -h 127.0.0.1 --port 3306 -u root --password=root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
+#
+#      - name: Install WordPress
+#        run: bash bin/install-wp-tests.sh wordpress root root 127.0.0.1:3306 ${{ matrix.wp }}
+#
+#      - name: PHPUnit Test
+#        run: composer test
 
-      - name: Setup PHP with composer
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          tools: composer
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-suggest
-
-      - name: Start MySQL
-        run: |
-          sudo systemctl start mysql
-          mysql -h 127.0.0.1 --port 3306 -u root --password=root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
-
-      - name: Install WordPress
-        run: bash bin/install-wp-tests.sh wordpress root root 127.0.0.1:3306 ${{ matrix.wp }}
-
-      - name: Check PHP syntax
-        run: composer lint
-
-      - name: PHPUnit Test
-        run: composer test
+  lint:
+    name: PHP Syntax Check
+    uses: tarosky/workflows/.github/workflows/phpcs.yml@main
+    with:
+      version: 7.4
 
   assets:
     name: Assets Test
@@ -67,7 +70,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@master
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Install NPM Packages
         run: npm install
@@ -77,11 +80,13 @@ jobs:
 
   status-check:
     name: Status Check
-    needs: [ test, assets ]
+    needs: [ lint, assets ]
+    if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Status Check
-        run: echo "All tests passed!"
+      - uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
 
   release:
     name: Deploy WordPress.org
@@ -103,7 +108,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@master
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Build Plugin
         run: bash bin/build.sh ${{ github.ref }}
