@@ -2,8 +2,6 @@ name: Deploy Plugin
 
 on:
   push:
-    branches:
-      - master
     tags:
       - '*'
   pull_request:
@@ -95,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@main
 
       - name: Setup PHP with composer
         uses: shivammathur/setup-php@v2
