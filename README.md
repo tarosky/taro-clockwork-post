@@ -67,6 +67,10 @@ add_filter( 'tscp_cron_interval', function() {
 
 ## Changelog
 
+### 1.2.6
+
+* Fix month string error in Clasic editor's meta box. This happened on Any 31st day in a month.
+
 ### 1.2.2
 
 * Fix deploy script to avoid incorrect versioning.
