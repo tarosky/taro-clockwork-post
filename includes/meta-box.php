@@ -16,8 +16,8 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 			wp_nonce_field( 'tscp_date', '_tscpnonce', false );
 			$date_time = get_post_meta( $post->ID, '_tscp_expires', true );
 			if ( ! $date_time ) {
-				$now = new DateTime();
-				$now->add( new DateInterval( sprintf( 'P1MT%sH', get_option( 'gmt_offset' ) ) ) );
+				$now = new DateTime( 'now', wp_timezone() );
+				$now->add( new DateInterval( 'P1M' ) );
 				$one_month_later = $now->format( 'Y-m-d H:i:s' );
 				$date_time       = apply_filters( 'tspc_default_expires', $one_month_later, $post );
 			}
@@ -37,9 +37,9 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 					$year_input  = sprintf( '<input type="text" name="tscp-year" class="tscp-long" value="%s" />', esc_attr( $year ) );
 					$month_input = '<select name="tscp-month" class="tscp-month">';
 					for ( $i = 1; $i <= 12; $i++ ) {
-						$month_str = mysql2date( 'M', str_replace( '-00-', sprintf( '-%02d-', $i ), date_i18n( 'Y-00-d' ) ) );
+						$month_str = mysql2date( 'M', date_i18n( 'Y-' . sprintf( '%02d', $i ) . '-01' ) );
 						// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-						$month_input .= sprintf( '<option value="%02d" %s>%s</option>', $i, selected( $i, $month, false ), $month_str );
+						$month_input .= sprintf( '<option value="%02d" %s>%s</option>', $i, selected( $i, (int) $month, false ), $month_str );
 					}
 					$month_input .= '</select>';
 					$day_input    = sprintf( '<input type="text" name="tscp-day" class="tscp-short" value="%s" />', esc_attr( $day ) );
