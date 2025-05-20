@@ -3,9 +3,7 @@ Taro Clockwork Post
 
 Contributors: tarosky,Takahashi_Fumiki  
 Tags: post, media, expiration  
-Requires at least: 5.9  
-Requires PHP: 7.2  
-Tested up to: 6.7  
+Tested up to: 6.8  
 Stable tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt  
