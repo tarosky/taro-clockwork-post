@@ -1,0 +1,13 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Anonymous function has an unused use \$post_type\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: includes/meta-box.php
+
+		-
+			message: '#^Parameter \#2 \$output of function get_post_types expects ''names''\|''objects'', ''OBJECT'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/setting.php
