@@ -6,7 +6,7 @@ Description: You can expire post with specified date.
 Author: TAROSKY INC. <mng_wpcom@tarosky.co.jp>
 Version: nightly
 Requires at least: 5.9
-Requires PHP: 7.2
+Requires PHP: 7.4
 Author URI: https://tarosky.co.jp
 Text Domain: tscp
 Domain Path: /languages/
