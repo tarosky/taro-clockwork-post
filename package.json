@@ -2,7 +2,6 @@
 	"name": "taro-clockwork-post",
 	"version": "1.0.0",
 	"description": "",
-	"main": "gulpfile.js",
 	"directories": {
 		"test": "tests"
 	},
@@ -13,13 +12,28 @@
 		"stop": "wp-env stop",
 		"cli": "wp-env run cli wp",
 		"cli:test": "wp-env run tests-cli wp",
-		"package": "gulp build",
-		"watch": "gulp watch",
-		"gulp": "gulp",
-		"lint": "gulp lint",
-		"format:js": "eslint --fix ./assets/js/**/*.js",
-		"gulp:task": "gulp --tasks",
+		"package": "npm run build:css && npm run build:js && npm run dump",
+		"build:css": "sass ./assets/scss/:./dist/css/ --style=compressed && postcss ./dist/css/*.css --use autoprefixer --replace",
+		"build:js": "grab-deps js assets/js dist/js",
+		"dump": "grab-deps dump dist",
+		"watch": "npm-watch",
+		"fix": "npm run fix:js && npm run fix:css",
+		"fix:js": "eslint --fix -c .eslintrc assets/js",
+		"fix:css": "stylelint --fix assets/scss",
+		"lint": "npm run lint:js && npm run lint:css",
+		"lint:js": "wp-scripts lint-js ./assets/js",
+		"lint:css": "wp-scripts lint-style './assets/scss/**/*.scss'",
 		"test": "wp-env run tests-cli ./wp-content/plugins/taro-clockwork-post/vendor/bin/phpunit -c ./wp-content/plugins/taro-clockwork-post/phpunit.xml.dist"
+	},
+	"watch": {
+		"build:js": {
+			"patterns": ["assets/js"],
+			"extensions": "js,jsx"
+		},
+		"build:css": {
+			"patterns": ["assets/scss"],
+			"extensions": "scss"
+		}
 	},
 	"repository": {
 		"type": "git",
@@ -33,36 +47,22 @@
 	},
 	"homepage": "",
 	"devDependencies": {
-		"@babel/core": "^7.1.0",
-		"@babel/plugin-transform-react-jsx": "^7.0.0",
-		"@babel/preset-env": "^7.1.0",
+		"@kunoichi/grab-deps": "^3.0.0",
 		"@wordpress/env": "^9.10.0",
 		"@wordpress/eslint-plugin": "^9.0",
-		"babel-eslint": "^10.0.1",
-		"babel-loader": "^8.0.5",
-		"eslint": "^7.13",
-		"gulp": "^4.0.0",
-		"gulp-autoprefixer": "^7.0.0",
-		"gulp-eslint": "^6.0.0",
-		"gulp-load-plugins": "^2.0",
-		"gulp-notify": "^3.2.0",
-		"gulp-plumber": "^1.2.0",
-		"gulp-rename": "^1.4.0",
-		"gulp-sass": "^5.1.0",
-		"gulp-sass-glob": "^1.0.9",
-		"gulp-sourcemaps": "^3.0",
-		"gulp-stylelint": "^13.0.0",
-		"sass": "^1.83.0",
-		"stylelint": "^13.13.1",
-		"stylelint-config-wordpress": "^17.0.0",
-		"vinyl-named": "^1.1.0",
-		"webpack": "^5.3",
-		"webpack-stream": "^6.1",
+		"@wordpress/scripts": "^30.0.0",
+		"@wordpress/stylelint-config": "^22.0.0",
+		"autoprefixer": "^10.4.16",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.2.7"
+		"lint-staged": "^16.2.7",
+		"npm-watch": "^0.13.0",
+		"postcss": "^8.4.33",
+		"postcss-cli": "^11.0.0",
+		"sass": "^1.83.0",
+		"stylelint": "^16.0.0"
 	},
 	"lint-staged": {
-		"*.js": "npm run format:js",
+		"*.js": "npm run fix:js",
 		"*.scss": "npm run fix:css",
 		"*.php": "composer lint"
 	}

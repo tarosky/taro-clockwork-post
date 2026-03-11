@@ -1,0 +1,46 @@
+[
+	{
+		"handle": "tscp-editor-input",
+		"path": "dist/js/editor-input.js",
+		"ext": "js",
+		"hash": "9c5e3373858cd95d0b724220744c31b5",
+		"version": "0.0.0",
+		"deps": [
+			"wp-plugins",
+			"wp-edit-post",
+			"wp-components",
+			"wp-data",
+			"wp-api-fetch",
+			"wp-i18n",
+			"wp-element",
+			"react-jsx-runtime"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "tscp-editor-input",
+		"path": "dist/css/editor-input.css",
+		"ext": "css",
+		"hash": "847eff8794597927723375874ea9ff52",
+		"version": "0.0.0",
+		"deps": [
+			"wp-components"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "admin",
+		"path": "dist/css/admin.css",
+		"ext": "css",
+		"hash": "3ca15f861b9309d3255e57894f455d54",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	}
+]
