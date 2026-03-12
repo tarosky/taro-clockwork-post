@@ -6,7 +6,7 @@
  */
 
 add_action( 'admin_enqueue_scripts', function () {
-	wp_enqueue_style( 'tscp-admin-helper', tscp_asset_url( 'css/admin.css' ), [], tscp_version() );
+	wp_enqueue_style( 'tscp-admin-helper' );
 } );
 
 // Register meta box for specified posts

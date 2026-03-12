@@ -1,5 +1,4 @@
 {
-	"parser": "babel-eslint",
 	"env": {
 		"browser": true,
 		"jquery": true
@@ -26,10 +25,5 @@
 		"object-property-newline": "off",
 		"yoda": "off",
 		"strict": "off"
-	},
-	"settings": {
-		"react": {
-			"version": "16.9.0"
-		}
 	}
 }
