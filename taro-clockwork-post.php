@@ -25,7 +25,6 @@ add_action( 'plugins_loaded', 'tscp_plugins_loaded' );
  * @package tscp
  */
 function tscp_plugins_loaded() {
-	load_plugin_textdomain( 'tscp', false, basename( __DIR__ ) . '/languages' );
 	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
 		add_action( 'admin_notices', 'tscp_plugin_notice' );
 	} else {
@@ -35,6 +34,8 @@ function tscp_plugins_loaded() {
 		require_once __DIR__ . '/includes/cron.php';
 		require_once __DIR__ . '/includes/meta-box.php';
 		require_once __DIR__ . '/includes/block-editor.php';
+		// Register asset hook registration.
+		add_action( 'init', 'tscp_register_assets' );
 	}
 }
 
@@ -48,6 +49,44 @@ function tscp_plugin_notice() {
 	/* translators: %s current php version */
 	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.6.0 and over but your %s.', 'tscp' ), phpversion() );
 	printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
+}
+
+/**
+ * Register all assets from wp-dependencies.json.
+ *
+ * @return void
+ */
+function tscp_register_assets() {
+	$json = __DIR__ . '/wp-dependencies.json';
+	if ( ! file_exists( $json ) ) {
+		return;
+	}
+	$dependencies = json_decode( file_get_contents( $json ), true );
+	if ( empty( $dependencies ) ) {
+		return;
+	}
+	$base = trailingslashit( plugin_dir_url( __FILE__ ) );
+	foreach ( $dependencies as $dep ) {
+		if ( empty( $dep['path'] ) ) {
+			continue;
+		}
+		$url = $base . $dep['path'];
+		switch ( $dep['ext'] ) {
+			case 'css':
+				wp_register_style( $dep['handle'], $url, $dep['deps'], $dep['hash'], $dep['media'] );
+				break;
+			case 'js':
+				$footer = [ 'in_footer' => $dep['footer'] ];
+				if ( in_array( $dep['strategy'], [ 'defer', 'async' ], true ) ) {
+					$footer['strategy'] = $dep['strategy'];
+				}
+				wp_register_script( $dep['handle'], $url, $dep['deps'], $dep['hash'], $footer );
+				if ( in_array( 'wp-i18n', $dep['deps'], true ) ) {
+					wp_set_script_translations( $dep['handle'], 'tscp' );
+				}
+				break;
+		}
+	}
 }
 
 /**

@@ -7,12 +7,14 @@
 .gitignore
 .node-version
 .stylelintrc.json
-.wordpress_org
+.wordpress-org
 .wp-env.json
 node_modules
 composer.lock
 package-lock.json
 phpcs.ruleset.xml
+phpstan.neon
+phpstan-baseline.neon
 phpunit.xml.dist
 README.md
 webpack.config.js

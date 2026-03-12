@@ -10,10 +10,8 @@
  */
 add_action( 'enqueue_block_editor_assets', function () {
 	// Register script
-	wp_enqueue_script( 'tscp-editor-input', tscp_asset_url( 'js/editor-input.js' ), [ 'wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-i18n', 'wp-compose', 'wp-element', 'wp-api-fetch' ], tscp_version(), true );
-	wp_enqueue_style( 'tscp-editor-input', tscp_asset_url( 'css/editor-input.css' ), [ 'wp-components' ], tscp_version() );
-	// translations.
-	wp_set_script_translations( 'tscp-editor-input', 'tscp' );
+	wp_enqueue_script( 'tscp-editor-input' );
+	wp_enqueue_style( 'tscp-editor-input' );
 	// Register variables.
 	wp_localize_script( 'tscp-editor-input', 'TscpEditorInput', [
 		'postTypes' => tscp_post_types(),

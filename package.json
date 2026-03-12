@@ -7,6 +7,7 @@
 	},
 	"scripts": {
 		"prepare": "husky",
+		"test": "RESULT=${PWD##*/} && wp-env run tests-cli ./wp-content/plugins/$RESULT/vendor/bin/phpunit -c ./wp-content/plugins/$RESULT/phpunit.xml.dist",
 		"start": "wp-env start",
 		"update": "wp-env start --update",
 		"stop": "wp-env stop",
@@ -22,8 +23,7 @@
 		"fix:css": "stylelint --fix assets/scss",
 		"lint": "npm run lint:js && npm run lint:css",
 		"lint:js": "wp-scripts lint-js ./assets/js",
-		"lint:css": "wp-scripts lint-style './assets/scss/**/*.scss'",
-		"test": "wp-env run tests-cli ./wp-content/plugins/taro-clockwork-post/vendor/bin/phpunit -c ./wp-content/plugins/taro-clockwork-post/phpunit.xml.dist"
+		"lint:css": "wp-scripts lint-style './assets/scss/**/*.scss'"
 	},
 	"watch": {
 		"build:js": {
@@ -49,7 +49,6 @@
 	"devDependencies": {
 		"@kunoichi/grab-deps": "^3.0.0",
 		"@wordpress/env": "^10.0",
-		"@wordpress/eslint-plugin": "^9.0",
 		"@wordpress/scripts": "^31.0.0",
 		"autoprefixer": "^10.4.16",
 		"husky": "^9.1.7",
