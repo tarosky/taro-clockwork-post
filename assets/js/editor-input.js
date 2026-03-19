@@ -15,18 +15,20 @@ const { select, dispatch } = wp.data;
 const { apiFetch } = wp;
 const { __, sprintf } = wp.i18n;
 
+const pad = ( value ) => String( value ).padStart( 2, '0' );
+
 const toLocalDate = ( date ) => {
-	if ( date.match( /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):\d{2}/ ) ) {
-		// eslint-disable-next-line @wordpress/valid-sprintf
-		return sprintf( '%04d-%02d-%02dT%02d:%02d', RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5 );
+	const m = date.match( /(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):\d{1,2}/ );
+	if ( m ) {
+		return `${ m[ 1 ] }-${ pad( m[ 2 ] ) }-${ pad( m[ 3 ] ) }T${ pad( m[ 4 ] ) }:${ pad( m[ 5 ] ) }`;
 	}
 	return '';
 };
 
 const toDate = ( localDate ) => {
-	if ( localDate.match( /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/ ) ) {
-		// eslint-disable-next-line @wordpress/valid-sprintf
-		return sprintf( '%04d-%02d-%02d %02d:%02d:59', RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5 );
+	const m = localDate.match( /(\d{4})-(\d{1,2})-(\d{1,2})T(\d{1,2}):(\d{1,2})/ );
+	if ( m ) {
+		return `${ m[ 1 ] }-${ pad( m[ 2 ] ) }-${ pad( m[ 3 ] ) } ${ pad( m[ 4 ] ) }:${ pad( m[ 5 ] ) }:59`;
 	}
 	return '';
 };
@@ -107,7 +109,7 @@ const TscpPostExpireBox = () => {
 			) }
 			<ToggleControl
 				className="tscp-time-input-toggle"
-				label={ __( 'Expires at specified time', 'tscp' ) }
+				label={ __( 'Expires at specified time', 'taro-clockwork-post' ) }
 				checked={ active }
 				onChange={ ( isActive ) => {
 					setActive( isActive );
@@ -115,7 +117,7 @@ const TscpPostExpireBox = () => {
 				} }
 			/>
 			{ active && (
-				<TextControl label={ __( 'Expires At', 'tscp' ) } className="tscp-time-input-date" type="datetime-local"
+				<TextControl label={ __( 'Expires At', 'taro-clockwork-post' ) } className="tscp-time-input-date" type="datetime-local"
 					value={ date }
 					onChange={ ( ( newDate ) => {
 						setDate( newDate );

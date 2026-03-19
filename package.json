@@ -13,6 +13,7 @@
 		"stop": "wp-env stop",
 		"cli": "wp-env run cli wp",
 		"cli:test": "wp-env run tests-cli wp",
+		"check": "wp-env run cli wp plugin check wp-content/plugins/taro-clockwork-post --require=./wp-content/plugins/plugin-check.latest-stable/cli.php --exclude-directories=.git,vendor,tests,node_modules,wordpress,dist",
 		"package": "npm run build:css && npm run build:js && npm run dump",
 		"build:css": "sass ./assets/scss/:./dist/css/ --style=compressed && postcss ./dist/css/*.css --use autoprefixer --replace",
 		"build:js": "grab-deps js assets/js dist/js",
