@@ -21,7 +21,7 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 				$now = new DateTime( 'now', wp_timezone() );
 				$now->add( new DateInterval( 'P1M' ) );
 				$one_month_later = $now->format( 'Y-m-d H:i:s' );
-				$date_time       = apply_filters( 'tspc_default_expires', $one_month_later, $post );
+				$date_time       = apply_filters( 'tscp_default_expires', $one_month_later, $post );
 			}
 			list( $date, $time )        = explode( ' ', $date_time );
 			list( $year, $month, $day ) = explode( '-', $date );
