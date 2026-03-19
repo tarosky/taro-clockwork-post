@@ -40,7 +40,7 @@ add_action( 'rest_api_init', function () {
 		],
 		'post_id'   => [
 			'required'          => true,
-			'type'              => 'int',
+			'type'              => 'integer',
 			'validate_callback' => function ( $post_id ) {
 				return is_numeric( $post_id ) && get_post( $post_id );
 			},
@@ -65,7 +65,7 @@ add_action( 'rest_api_init', function () {
 			'args'                => array_merge( $args, [
 				'should'  => [
 					'required' => true,
-					'type'     => 'bool',
+					'type'     => 'boolean',
 				],
 				'expires' => [
 					'required'          => true,
