@@ -45,8 +45,8 @@ function tscp_plugins_loaded() {
  * @package tscp
  */
 function tscp_plugin_notice() {
-	/* translators: %s current php version */
-	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.6.0 and over but your %s.', 'taro-clockwork-post' ), phpversion() );
+	/* translators: %1$s required php version, %2$s current php version */
+	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP %1$s and over but your %2$s.', 'taro-clockwork-post' ), '7.4', phpversion() );
 	printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 }
 

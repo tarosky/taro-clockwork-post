@@ -50,10 +50,6 @@ add_action( 'admin_init', function () {
 	// Automatic save.
 	register_setting( 'reading', 'tscp_post_types', [
 		'type'              => 'array',
-		'sanitize_callback' => function ( $value ) {
-			return array_filter( (array) $value, function ( $v ) {
-				return is_string( $v ) && post_type_exists( $v );
-			} );
-		},
+		'sanitize_callback' => 'tscp_sanitize_post_types',
 	] );
 } );
