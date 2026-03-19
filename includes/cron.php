@@ -5,6 +5,8 @@
  * @package tscp
  */
 
+defined( 'ABSPATH' ) || die();
+
 define( 'TSCP_SCHEDULE_NAME', 'tscp_interval' );
 define( 'TSCP_EVENT_NAME', 'tscp_event_handler' );
 
@@ -24,7 +26,7 @@ add_filter( 'cron_schedules', function ( array $schedules ) {
 	$schedules[ TSCP_SCHEDULE_NAME ] = [
 		'interval' => $cron_interval,
 		// translators: %d means cron interval in second.
-		'display'  => sprintf( __( 'Post expiration interval of %d seconds.', 'tscp' ), $cron_interval ),
+		'display'  => sprintf( __( 'Post expiration interval of %d seconds.', 'taro-clockwork-post' ), $cron_interval ),
 	];
 
 	return $schedules;
@@ -75,7 +77,7 @@ add_action( 'admin_notices', function () {
 	if ( current_user_can( 'manage_options' ) ) {
 		$last_executed = get_option( 'tscp_cron_executed', false );
 		if ( ! $last_executed ) {
-			$message = __( 'Taro Clockwork Post is never executed. Please check if your cron task works.', 'tscp' );
+			$message = __( 'Taro Clockwork Post is never executed. Please check if your cron task works.', 'taro-clockwork-post' );
 		} else {
 			$executed = new DateTime( $last_executed );
 			$now      = new DateTime();
@@ -83,7 +85,7 @@ add_action( 'admin_notices', function () {
 			$diff = $now->diff( $executed );
 			if ( $diff->days > 2 ) {
 				// translators: %d means days.
-				$message = sprintf( __( 'Taro Clockwork Post doesn\'t work for %d days. Please check if your cron task works.', 'tscp' ), $diff->days );
+				$message = sprintf( __( 'Taro Clockwork Post doesn\'t work for %d days. Please check if your cron task works.', 'taro-clockwork-post' ), $diff->days );
 			} else {
 				return;
 			}

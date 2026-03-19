@@ -5,15 +5,18 @@
  * @package tscp
  */
 
+
+defined( 'ABSPATH' ) || die();
+
 // Register setting fields
 add_action( 'admin_init', function () {
 	add_settings_section(
 		'tscp_setting',
-		__( 'Post Expiration Setting', 'tscp' ),
+		__( 'Post Expiration Setting', 'taro-clockwork-post' ),
 		function () {
 			printf(
 				'<p class="description">%s</p>',
-				__( 'These settings are used by Taro Clockwork Post for post expiration.', 'tscp' )
+				esc_html__( 'These settings are used by Taro Clockwork Post for post expiration.', 'taro-clockwork-post' )
 			);
 		},
 		'reading'
@@ -22,7 +25,7 @@ add_action( 'admin_init', function () {
 	// Add settings to section
 	add_settings_field(
 		'tscp_post_types',
-		__( 'Post Types', 'tscp' ),
+		__( 'Post Types', 'taro-clockwork-post' ),
 		function () {
 			$post_types               = tscp_post_types();
 			$available_post_type_list = get_post_types( [ 'show_ui' => true ], OBJECT );
@@ -38,7 +41,7 @@ add_action( 'admin_init', function () {
 					esc_html( $post_type->label )
 				);
 			}
-			printf( '<p class="description">%s</p>', esc_html__( 'Specified post types will have expiration field.', 'tscp' ) );
+			printf( '<p class="description">%s</p>', esc_html__( 'Specified post types will have expiration field.', 'taro-clockwork-post' ) );
 		},
 		'reading',
 		'tscp_setting'

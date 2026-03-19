@@ -107,7 +107,7 @@ const TscpPostExpireBox = () => {
 			) }
 			<ToggleControl
 				className="tscp-time-input-toggle"
-				label={ __( 'Expires at specified time', 'tscp' ) }
+				label={ __( 'Expires at specified time', 'taro-clockwork-post' ) }
 				checked={ active }
 				onChange={ ( isActive ) => {
 					setActive( isActive );
@@ -115,7 +115,7 @@ const TscpPostExpireBox = () => {
 				} }
 			/>
 			{ active && (
-				<TextControl label={ __( 'Expires At', 'tscp' ) } className="tscp-time-input-date" type="datetime-local"
+				<TextControl label={ __( 'Expires At', 'taro-clockwork-post' ) } className="tscp-time-input-date" type="datetime-local"
 					value={ date }
 					onChange={ ( ( newDate ) => {
 						setDate( newDate );

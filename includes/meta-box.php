@@ -5,6 +5,8 @@
  * @package tscp
  */
 
+defined( 'ABSPATH' ) || die();
+
 add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_style( 'tscp-admin-helper' );
 } );
@@ -30,7 +32,7 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 				<input class="tscp-toggler" type="checkbox" id="tscp-should-expire" value="1"
 					name="tscp-should-expire" <?php checked( get_post_meta( $post->ID, '_tscp_should_expire', true ) ); ?> />
 				<label class="tscp-field-label" for="tscp-should-expire">
-					<?php esc_html_e( 'Expires at specified time', 'tscp' ); ?>
+					<?php esc_html_e( 'Expires at specified time', 'taro-clockwork-post' ); ?>
 				</label>
 				<span class="tscp-date-selector">
 					<?php
@@ -46,7 +48,7 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 					$hour_input   = sprintf( '<input type="text" name="tscp-hour" class="tscp-short" value="%s" />', esc_attr( $hour ) );
 					$minute_input = sprintf( '<input type="text" name="tscp-minute" class="tscp-short" value="%s" />', esc_attr( $minute ) );
 					// translators: %1$s month, %2$s date, %3$s, year, %4$s hour, %5$s minute
-					printf( _x( '%1$s %2$s, %3$s @ %4$s:%5$s', 'date-input', 'tscp' ),
+					printf( _x( '%1$s %2$s, %3$s @ %4$s:%5$s', 'date-input', 'taro-clockwork-post' ),
 						$month_input,
 						$day_input,
 						$year_input,
@@ -59,7 +61,7 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 						<span class="description">
 						<?php
 						// translators: %s means admin URL.
-						printf( __( 'You can choose post type to be expired at <a href="%s" target="_blank">setting</a>.', 'tscp' ), esc_url( admin_url( 'options-reading.php' ) ) );
+						echo wp_kses_post( sprintf( __( 'You can choose post type to be expired at <a href="%s" target="_blank">setting</a>.', 'taro-clockwork-post' ), esc_url( admin_url( 'options-reading.php' ) ) ) );
 						?>
 					</span>
 					<?php endif; ?>
@@ -113,7 +115,7 @@ add_action( 'admin_init', function () {
 			foreach ( $columns as $key => $val ) {
 				$new_columns[ $key ] = $val;
 				if ( 'date' === $key ) {
-					$new_columns['expires'] = sprintf( '<span class="dashicons dashicons-clock" title="%s"></span>', esc_attr__( 'Expires', 'tscp' ) );
+					$new_columns['expires'] = sprintf( '<span class="dashicons dashicons-clock" title="%s"></span>', esc_attr__( 'Expires', 'taro-clockwork-post' ) );
 				}
 			}
 			return $new_columns;

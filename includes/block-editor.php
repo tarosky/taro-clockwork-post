@@ -5,6 +5,9 @@
  * @package tscp
  */
 
+
+defined( 'ABSPATH' ) || die();
+
 /**
  * Register block editor assets.
  */
@@ -80,12 +83,12 @@ add_action( 'rest_api_init', function () {
 				update_post_meta( $post_id, '_tscp_should_expire', $should_expire );
 				update_post_meta( $post_id, '_tscp_expires', $expires_at );
 				if ( ! $should_expire ) {
-					$message = __( 'This post won\'t be expired.', 'tscp' );
+					$message = __( 'This post won\'t be expired.', 'taro-clockwork-post' );
 				} elseif ( empty( $expires_at ) ) {
-					$message = __( 'This post should be expired but no date set.', 'tscp' );
+					$message = __( 'This post should be expired but no date set.', 'taro-clockwork-post' );
 				} else {
 					// translators: %s is expired at.
-					$message = sprintf( __( 'This post will be expired at %s.', 'tscp' ), mysql2date( get_option( 'date_format' ) . ' H:i', $expires_at ) );
+					$message = sprintf( __( 'This post will be expired at %s.', 'taro-clockwork-post' ), mysql2date( get_option( 'date_format' ) . ' H:i', $expires_at ) );
 				}
 				return new WP_REST_Response( [
 					'message'        => $message,

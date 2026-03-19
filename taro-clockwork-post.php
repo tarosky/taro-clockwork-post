@@ -8,8 +8,7 @@ Version: nightly
 Requires at least: 5.9
 Requires PHP: 7.4
 Author URI: https://tarosky.co.jp
-Text Domain: tscp
-Domain Path: /languages/
+Text Domain: taro-clockwork-post
 License: GPL v3 or later.
 */
 
@@ -25,7 +24,7 @@ add_action( 'plugins_loaded', 'tscp_plugins_loaded' );
  * @package tscp
  */
 function tscp_plugins_loaded() {
-	if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
+	if ( version_compare( phpversion(), '7.4.0', '<' ) ) {
 		add_action( 'admin_notices', 'tscp_plugin_notice' );
 	} else {
 		// Load all includes.
@@ -47,7 +46,7 @@ function tscp_plugins_loaded() {
  */
 function tscp_plugin_notice() {
 	/* translators: %s current php version */
-	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.6.0 and over but your %s.', 'tscp' ), phpversion() );
+	$message = sprintf( __( '[Taro Clockwork Post] This plugin requires PHP 5.6.0 and over but your %s.', 'taro-clockwork-post' ), phpversion() );
 	printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 }
 
@@ -82,7 +81,7 @@ function tscp_register_assets() {
 				}
 				wp_register_script( $dep['handle'], $url, $dep['deps'], $dep['hash'], $footer );
 				if ( in_array( 'wp-i18n', $dep['deps'], true ) ) {
-					wp_set_script_translations( $dep['handle'], 'tscp' );
+					wp_set_script_translations( $dep['handle'], 'taro-clockwork-post' );
 				}
 				break;
 		}

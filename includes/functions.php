@@ -5,6 +5,8 @@
  * @package tscp
  */
 
+defined( 'ABSPATH' ) || die();
+
 /**
  * Get post type to be expired.
  *
@@ -78,7 +80,7 @@ function tscp_will_expire( $post = null ) {
 		if ( $date > $now ) {
 			$will_expire = true;
 		} else {
-			$will_expire = new WP_Error( 'expiration_failed', __( 'Failed expiration', 'tscp' ) );
+			$will_expire = new WP_Error( 'expiration_failed', __( 'Failed expiration', 'taro-clockwork-post' ) );
 		}
 	}
 
