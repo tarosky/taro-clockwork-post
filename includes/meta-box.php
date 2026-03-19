@@ -47,14 +47,33 @@ add_action( 'add_meta_boxes', function ( $post_type ) {
 					$day_input    = sprintf( '<input type="text" name="tscp-day" class="tscp-short" value="%s" />', esc_attr( $day ) );
 					$hour_input   = sprintf( '<input type="text" name="tscp-hour" class="tscp-short" value="%s" />', esc_attr( $hour ) );
 					$minute_input = sprintf( '<input type="text" name="tscp-minute" class="tscp-short" value="%s" />', esc_attr( $minute ) );
-					// translators: %1$s month, %2$s date, %3$s, year, %4$s hour, %5$s minute
-					printf( _x( '%1$s %2$s, %3$s @ %4$s:%5$s', 'date-input', 'taro-clockwork-post' ),
+					$date_input   = sprintf(
+						// translators: %1$s month, %2$s date, %3$s, year, %4$s hour, %5$s minute
+						_x( '%1$s %2$s, %3$s @ %4$s:%5$s', 'date-input', 'taro-clockwork-post' ),
 						$month_input,
 						$day_input,
 						$year_input,
 						$hour_input,
 						$minute_input
 					);
+					// Sanitize output.
+					$allowed_html = [
+						'input'  => [
+							'type'  => true,
+							'name'  => true,
+							'class' => true,
+							'value' => true,
+						],
+						'select' => [
+							'name'  => true,
+							'class' => true,
+						],
+						'option' => [
+							'value'    => true,
+							'selected' => true,
+						],
+					];
+					echo wp_kses( $date_input, $allowed_html );
 					?>
 				</span>
 					<?php if ( current_user_can( 'manage_options' ) ) : ?>
