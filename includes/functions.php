@@ -55,6 +55,18 @@ function tscp_get_expired_posts() {
 }
 
 /**
+ * Sanitize post types option value.
+ *
+ * @param mixed $value Raw option value.
+ * @return string[] Filtered array of valid post type names.
+ */
+function tscp_sanitize_post_types( $value ) {
+	return array_filter( (array) $value, function ( $v ) {
+		return is_string( $v ) && post_type_exists( $v );
+	} );
+}
+
+/**
  * Check if post will be expired.
  *
  * @package tscp

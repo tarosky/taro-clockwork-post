@@ -41,6 +41,15 @@ jobs:
       php_version: ${{ matrix.php }}
       wp_version: ${{ matrix.wp }}
 
+  coverage:
+    name: Code Coverage
+    needs: [ test ]
+    uses: tarosky/workflows/.github/workflows/wp-unit-test.yml@main
+    with:
+      php_version: '8.0'
+      wp_version: latest
+      coverage: true
+
   assets:
     name: Check Assets
     uses: tarosky/workflows/.github/workflows/npm.yml@main
