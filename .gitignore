@@ -5,3 +5,5 @@
 composer.lock
 *.cache
 wp-dependencies.json
+.idea
+.DS_Store
