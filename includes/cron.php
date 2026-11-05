@@ -75,17 +75,13 @@ add_action( TSCP_EVENT_NAME, function () {
 // Register debug cron.
 add_action( 'admin_notices', function () {
 	if ( current_user_can( 'manage_options' ) ) {
-		$last_executed = get_option( 'tscp_cron_executed', false );
-		if ( ! $last_executed ) {
+		$days = tscp_days_since_last_execution();
+		if ( false === $days ) {
 			$message = __( 'Taro Clockwork Post is never executed. Please check if your cron task works.', 'taro-clockwork-post' );
 		} else {
-			$executed = new DateTime( $last_executed );
-			$now      = new DateTime();
-			$now->add( new DateInterval( sprintf( 'PT%sH', get_option( 'gmt_offset' ) ) ) );
-			$diff = $now->diff( $executed );
-			if ( $diff->days > 2 ) {
+			if ( $days > 2 ) {
 				// translators: %d means days.
-				$message = sprintf( __( 'Taro Clockwork Post doesn\'t work for %d days. Please check if your cron task works.', 'taro-clockwork-post' ), $diff->days );
+				$message = sprintf( __( 'Taro Clockwork Post doesn\'t work for %d days. Please check if your cron task works.', 'taro-clockwork-post' ), $days );
 			} else {
 				return;
 			}
