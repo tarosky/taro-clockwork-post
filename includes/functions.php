@@ -67,6 +67,23 @@ function tscp_sanitize_post_types( $value ) {
 }
 
 /**
+ * Get days elapsed since the last cron execution.
+ *
+ * @return int|false Days elapsed, or false if cron has never been executed.
+ */
+function tscp_days_since_last_execution() {
+	$last_executed = get_option( 'tscp_cron_executed', false );
+	if ( ! $last_executed ) {
+		return false;
+	}
+	// Last execution is saved in site's local time.
+	$timezone = wp_timezone();
+	$executed = new DateTimeImmutable( $last_executed, $timezone );
+	$now      = new DateTimeImmutable( 'now', $timezone );
+	return (int) $now->diff( $executed )->days;
+}
+
+/**
  * Check if post will be expired.
  *
  * @package tscp
@@ -86,9 +103,10 @@ function tscp_will_expire( $post = null ) {
 	} else {
 		$will_expire = false;
 		$expires     = get_post_meta( $post->ID, '_tscp_expires', true );
-		$date        = new DateTime( $expires );
-		$now         = new DateTime();
-		$now->add( new DateInterval( sprintf( 'PT%sH', (int) get_option( 'gmt_offset' ) ) ) );
+		// Expiration is saved in site's local time.
+		$timezone = wp_timezone();
+		$date     = new DateTimeImmutable( $expires, $timezone );
+		$now      = new DateTimeImmutable( 'now', $timezone );
 		if ( $date > $now ) {
 			$will_expire = true;
 		} else {
