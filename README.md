@@ -3,7 +3,7 @@ Taro Clockwork Post
 
 Contributors: tarosky,Takahashi_Fumiki  
 Tags: post, media, expiration  
-Tested up to: 6.9  
+Tested up to: 7.1  
 Stable tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt  
@@ -64,6 +64,12 @@ add_filter( 'tscp_cron_interval', function() {
 </pre>
 
 ## Changelog
+
+### 1.2.9
+
+* Fix a fatal error on every admin screen when the site's timezone is a negative (e.g. UTC-5) or fractional (e.g. UTC+5:30) UTC offset.
+* Fix expiration checks being off by 30 minutes on sites with a fractional UTC offset.
+* Confirm compatibility with WordPress 7.1.
 
 ### 1.2.6
 
